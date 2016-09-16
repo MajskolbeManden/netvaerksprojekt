@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netværksprojekt", "netværksprojekt\netværksprojekt.csproj", "{B94EAA94-C1F9-4300-B50C-946F5288D16E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B94EAA94-C1F9-4300-B50C-946F5288D16E}.Debug|x86.ActiveCfg = Debug|x86
+		{B94EAA94-C1F9-4300-B50C-946F5288D16E}.Debug|x86.Build.0 = Debug|x86
+		{B94EAA94-C1F9-4300-B50C-946F5288D16E}.Release|x86.ActiveCfg = Release|x86
+		{B94EAA94-C1F9-4300-B50C-946F5288D16E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
