@@ -1,21 +1,75 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace netværksprojekt
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class GameWorld : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private static float deltaTime;
+        private static GameWorld instance;
+        private static List<GameObject> objectToAdd = new List<GameObject>();
+        private static List<GameObject> objectsToRemove = new List<GameObject>();
+        private static List<GameObject> gameObjects = new List<GameObject>();
 
-        public Game1()
+        public static GameWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new GameWorld();
+
+                return instance;
+            }
+        }
+
+        private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+        }
+
+        public static float DeltaTime
+        {
+            get { return deltaTime; }
+        }
+
+        public static List<GameObject> GameObjects
+        {
+            get { return gameObjects; }
+            set { gameObjects = value; }
+        }
+
+        public static List<GameObject> ObjectsToRemove
+        {
+            get { return objectsToRemove; }
+            set { objectsToRemove = value; }
+        }
+
+        public static List<GameObject> ObjectToAdd
+        {
+            get { return objectToAdd; }
+            set { objectToAdd = value; }
+        }
+
+        public List<Collider> Colliders
+        {
+            get
+            {
+                List<Collider> tmp = new List<Collider>();
+                foreach (GameObject go in GameObjects)
+                {
+                    tmp.Add(go.GetComponent<Collider>());
+                }
+                return tmp;
+
+            }
         }
 
         /// <summary>

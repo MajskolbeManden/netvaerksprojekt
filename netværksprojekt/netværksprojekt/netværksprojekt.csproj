@@ -38,7 +38,18 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="Components\Collider.cs" />
+    <Compile Include="Components\Component.cs" />
+    <Compile Include="Components\GameObject.cs" />
+    <Compile Include="Components\SpriteRenderer.cs" />
+    <Compile Include="Components\Transform.cs" />
+    <Compile Include="GameWorld.cs" />
+    <Compile Include="interfaces\IBuilder.cs" />
+    <Compile Include="interfaces\ICollisionEnter.cs" />
+    <Compile Include="interfaces\ICollisionExit.cs" />
+    <Compile Include="interfaces\IDrawable.cs" />
+    <Compile Include="interfaces\ILoadable.cs" />
+    <Compile Include="interfaces\IUpdateable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,10 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CollisionTexture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enemies\" />
+    <Folder Include="Player\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
