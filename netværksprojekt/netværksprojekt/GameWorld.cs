@@ -83,6 +83,14 @@ namespace netværksprojekt
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            
+            GameObject gameObject = new GameObject();
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "testSprite.png", 1f));
+            gameObject.AddComponent(new Collider(gameObject));
+            gameObject.Transform.Position = new Vector2(10, 10);
+            gameObject.AddComponent(new Player(gameObject));
+
+            gameObjects.Add(gameObject);
         }
 
         /// <summary>
@@ -93,6 +101,10 @@ namespace netværksprojekt
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            foreach (GameObject go in gameObjects)
+            {
+                go.LoadContent(Content);
+            }
 
             // TODO: use this.Content to load your game content here
         }
@@ -128,6 +140,11 @@ namespace netværksprojekt
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            foreach (GameObject go in gameObjects)
+                go.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             // TODO: Add your drawing code here
 
