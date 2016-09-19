@@ -81,16 +81,16 @@ namespace netværksprojekt
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-            base.Initialize();
-            
             GameObject gameObject = new GameObject();
+            gameObject.AddComponent(new Player(gameObject));
             gameObject.AddComponent(new SpriteRenderer(gameObject, "testSprite.png", 1f));
             gameObject.AddComponent(new Collider(gameObject));
             gameObject.Transform.Position = new Vector2(10, 10);
-            gameObject.AddComponent(new Player(gameObject));
 
             gameObjects.Add(gameObject);
+            base.Initialize();
+            
+            
         }
 
         /// <summary>
@@ -99,6 +99,7 @@ namespace netværksprojekt
         /// </summary>
         protected override void LoadContent()
         {
+            
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             foreach (GameObject go in gameObjects)
