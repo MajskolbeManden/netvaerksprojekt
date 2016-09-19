@@ -38,11 +38,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Components\Collider.cs" />
-    <Compile Include="Components\Component.cs" />
-    <Compile Include="Components\GameObject.cs" />
-    <Compile Include="Components\SpriteRenderer.cs" />
-    <Compile Include="Components\Transform.cs" />
+    <Compile Include="General Components\Collider.cs" />
+    <Compile Include="General Components\Component.cs" />
+    <Compile Include="General Components\GameObject.cs" />
+    <Compile Include="General Components\SpriteRenderer.cs" />
+    <Compile Include="General Components\Transform.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="interfaces\IBuilder.cs" />
     <Compile Include="interfaces\ICollisionEnter.cs" />
@@ -50,6 +50,7 @@
     <Compile Include="interfaces\IDrawable.cs" />
     <Compile Include="interfaces\ILoadable.cs" />
     <Compile Include="interfaces\IUpdateable.cs" />
+    <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemies\" />
-    <Folder Include="Player\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
