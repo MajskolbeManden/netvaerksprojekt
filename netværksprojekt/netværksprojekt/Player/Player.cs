@@ -12,6 +12,7 @@ namespace netværksprojekt
 {
     class Player : Component, ILoadable, IUpdateable
     {
+        private Transform transform;
         private string name;
         private int health;
         private int highscore;
@@ -43,7 +44,8 @@ namespace netværksprojekt
 
         public Player(GameObject gameobject) : base(gameobject)
         {
-
+            transform = gameobject.Transform;
+            health = 10;
         }
 
         public void LoadContent(ContentManager content)
@@ -55,25 +57,26 @@ namespace netværksprojekt
         {
             KeyboardState keyState = Keyboard.GetState();
 
-            Vector2 translation = Vector2.Zero;
-            PlayerController(keyState, translation);
+            Vector2 translation = transform.Position;
+            PlayerController(keyState,translation);
+            
 
         }
 
         private void PlayerController(KeyboardState keyState, Vector2 translation)
         {
-
             if (keyState.IsKeyDown(Keys.D))
-                translation += new Vector2(1, 0);
+                transform.Position += new Vector2(1, 0);
 
             if (keyState.IsKeyDown(Keys.A))
-                translation += new Vector2(-1, 0);
+                transform.Position += new Vector2(-1, 0);
 
             if (keyState.IsKeyDown(Keys.W))
-                translation += new Vector2(0, -1);
+                transform.Position += new Vector2(0, -1);
 
             if (keyState.IsKeyDown(Keys.S))
-                translation += new Vector2(0, 1);
+                transform.Position += new Vector2(0, 1);
+
 
         }
     }

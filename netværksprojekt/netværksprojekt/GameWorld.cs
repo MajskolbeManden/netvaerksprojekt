@@ -130,6 +130,8 @@ namespace netværksprojekt
                 Exit();
 
             // TODO: Add your update logic here
+            foreach (GameObject go in gameObjects)
+                go.Update();
 
             base.Update(gameTime);
         }

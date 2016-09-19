@@ -13,6 +13,7 @@ namespace netværksprojekt
         internal Transform Transform
         {
             get { return transform; }
+            set { transform = value; }
         }
 
         public List<Component> Components
