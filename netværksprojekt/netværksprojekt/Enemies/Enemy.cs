@@ -27,6 +27,12 @@ namespace netværksprojekt
         public void Update()
         {
             transform.Position += new Vector2(-1, 0) * speed;
+            if (this.GameObject.Transform.Position.X < 5)
+            {
+                GameWorld.Instance.ObjectsToRemove.Add(this.GameObject);
+                
+            }
+                
         }
 
 
@@ -34,10 +40,7 @@ namespace netværksprojekt
 
         public void OnCollisionEnter(Collider other)
         {
-            if(other.GameObject.GetComponent("Player") is Player)
-            {
-                GameWorld.Instance.ObjectsToRemove.Add(this.GameObject);
-            }
+
         }
 
         public void OnCollisionExit(Collider other)

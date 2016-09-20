@@ -80,7 +80,7 @@ namespace netværksprojekt
         { 
             Rnd = new Random();
             int randomX = Rnd.Next(700,800);
-            int randomY = Rnd.Next(0, 500);
+            int randomY = Rnd.Next(0, 450);
             GameObject gameObject = new GameObject();
             gameObject.AddComponent(new Enemy(gameObject));
             gameObject.AddComponent(new SpriteRenderer(gameObject, "enemy", 1f));
@@ -89,6 +89,8 @@ namespace netværksprojekt
             
             objectsToAdd.Add(gameObject);
         }
+
+        
 
         private void SpawnEnemy(KeyboardState keyState)
         {
@@ -111,15 +113,27 @@ namespace netværksprojekt
         /// </summary>
         protected override void Initialize()
         {
-            
             // TODO: Add your initialization logic here
+            GameObject player = new GameObject();
+            player.AddComponent(new Player(player));
+            player.AddComponent(new SpriteRenderer(player, "testSprite.png", 1f));
+            player.AddComponent(new Collider(player));
+            player.Transform.Position = new Vector2(10, 10);
+            
             GameObject gameObject = new GameObject();
-            gameObject.AddComponent(new Player(gameObject));
-            gameObject.AddComponent(new SpriteRenderer(gameObject, "testSprite.png", 1f));
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "base1", 0f));
             gameObject.AddComponent(new Collider(gameObject));
-            gameObject.Transform.Position = new Vector2(10, 10);
-
+            gameObject.AddComponent(new Base(gameObject, player.GetComponent("Player") as Player));
+            gameObject.Transform.Position = new Vector2(0, 30);
             gameObjects.Add(gameObject);
+            
+            gameObject = new GameObject();
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "base2", 0f));
+            gameObject.AddComponent(new Collider(gameObject));
+            gameObject.Transform.Position = new Vector2(0, 230);
+            gameObjects.Add(gameObject);
+
+            gameObjects.Add(player);
             base.Initialize();
             
             
@@ -139,6 +153,8 @@ namespace netværksprojekt
                 go.LoadContent(Content);
             }
 
+
+            IsMouseVisible = true;
             
             // TODO: use this.Content to load your game content here
         }
@@ -198,6 +214,9 @@ namespace netværksprojekt
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
+
+            
+
             foreach (GameObject go in gameObjects)
                 go.Draw(spriteBatch);
 
