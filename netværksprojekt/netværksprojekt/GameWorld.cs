@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace netværksprojekt
@@ -14,6 +15,7 @@ namespace netværksprojekt
         SpriteBatch spriteBatch;
         private static float deltaTime;
         private static GameWorld instance;
+        private Random Rnd;
         private static List<GameObject> objectsToAdd = new List<GameObject>();
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
@@ -73,13 +75,16 @@ namespace netværksprojekt
         }
 
         private void CreateEnemy()
-        {
+        { 
+            Rnd = new Random();
+            int randomX = Rnd.Next(700,800);
+            int randomY = Rnd.Next(0, 500);
             GameObject gameObject = new GameObject();
             gameObject.AddComponent(new Enemy(gameObject));
             gameObject.AddComponent(new SpriteRenderer(gameObject, "enemy", 1f));
             gameObject.AddComponent(new Collider(gameObject));
-            gameObject.Transform.Position = new Vector2(700, 10);
-
+            gameObject.Transform.Position = new Vector2(randomX, randomY);
+            
             objectsToAdd.Add(gameObject);
         }
 
