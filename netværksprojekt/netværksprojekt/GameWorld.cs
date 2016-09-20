@@ -17,6 +17,7 @@ namespace netværksprojekt
         private static List<GameObject> objectsToAdd = new List<GameObject>();
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
+        private bool spawnEnemy;
 
         public static GameWorld Instance
         {
@@ -81,6 +82,19 @@ namespace netværksprojekt
             gameObject.Transform.Position = new Vector2(700, 10);
 
             objectsToAdd.Add(gameObject);
+        }
+
+        private void SpawnEnemy(KeyboardState keyState)
+        {
+            if (keyState.IsKeyDown(Keys.Space) && spawnEnemy == true)
+            {
+                CreateEnemy();
+                spawnEnemy = false;
+            }
+            if (keyState.IsKeyUp(Keys.Space))
+            {
+                spawnEnemy = true;
+            }
         }
 
         /// <summary>
@@ -157,8 +171,7 @@ namespace netværksprojekt
 
             KeyboardState keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.Space))
-                CreateEnemy();
+            SpawnEnemy(keyState);
 
             
             base.Update(gameTime);
