@@ -14,7 +14,7 @@ namespace netværksprojekt
         SpriteBatch spriteBatch;
         private static float deltaTime;
         private static GameWorld instance;
-        private static List<GameObject> objectToAdd = new List<GameObject>();
+        private static List<GameObject> objectsToAdd = new List<GameObject>();
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
 
@@ -52,10 +52,10 @@ namespace netværksprojekt
             set { objectsToRemove = value; }
         }
 
-        public static List<GameObject> ObjectToAdd
+        public static List<GameObject> ObjectsToAdd
         {
-            get { return objectToAdd; }
-            set { objectToAdd = value; }
+            get { return objectsToAdd; }
+            set { objectsToAdd = value; }
         }
 
         public List<Collider> Colliders
@@ -72,6 +72,17 @@ namespace netværksprojekt
             }
         }
 
+        private void CreateEnemy()
+        {
+            GameObject gameObject = new GameObject();
+            gameObject.AddComponent(new Enemy(gameObject));
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "enemy", 1f));
+            gameObject.AddComponent(new Collider(gameObject));
+            gameObject.Transform.Position = new Vector2(700, 10);
+
+            objectsToAdd.Add(gameObject);
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -80,6 +91,7 @@ namespace netværksprojekt
         /// </summary>
         protected override void Initialize()
         {
+            
             // TODO: Add your initialization logic here
             GameObject gameObject = new GameObject();
             gameObject.AddComponent(new Player(gameObject));
@@ -107,6 +119,7 @@ namespace netværksprojekt
                 go.LoadContent(Content);
             }
 
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -130,9 +143,24 @@ namespace netværksprojekt
                 Exit();
 
             // TODO: Add your update logic here
+            
+
+            foreach (GameObject go in objectsToAdd)
+            {
+                go.LoadContent(Content);
+                gameObjects.Add(go);
+            }
+            objectsToAdd.Clear();
+
             foreach (GameObject go in gameObjects)
                 go.Update();
 
+            KeyboardState keyState = Keyboard.GetState();
+
+            if (keyState.IsKeyDown(Keys.Space))
+                CreateEnemy();
+
+            
             base.Update(gameTime);
         }
 
