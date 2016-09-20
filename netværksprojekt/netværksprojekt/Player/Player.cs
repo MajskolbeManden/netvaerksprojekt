@@ -6,14 +6,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace netværksprojekt
 {
-    class Player : Component, ILoadable, IUpdateable
+    class Player : Component, ILoadable, IUpdateable, ICollisionEnter, ICollisionExit
     {
         private Transform transform;
         private string name;
         private int health;
         private int highscore;
-        private int income;
-        private int damage;
+        private bool takeDamage;
 
         public string Name
         {
@@ -32,6 +31,7 @@ namespace netværksprojekt
             get { return Highscore; }
             set { Highscore = value; }
         }
+
         public int Income
         {
             get { return Income; }
@@ -73,6 +73,21 @@ namespace netværksprojekt
             if (keyState.IsKeyDown(Keys.S))
                 transform.Position += new Vector2(0, 1);
 
+
+        }
+
+        public void OnCollisionEnter(Collider other)
+        {
+            if (other.GameObject.GetComponent("Enemy") is Enemy)
+            {
+                
+
+            }
+            
+        }
+
+        public void OnCollisionExit(Collider other)
+        {
 
         }
     }

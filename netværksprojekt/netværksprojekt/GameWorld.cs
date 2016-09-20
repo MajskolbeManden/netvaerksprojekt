@@ -17,6 +17,7 @@ namespace netværksprojekt
         private static List<GameObject> objectsToAdd = new List<GameObject>();
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
+        public List<Collider> colliders = new List<Collider>();
         private bool spawnEnemy;
 
         public static GameWorld Instance
@@ -36,7 +37,7 @@ namespace netværksprojekt
             Content.RootDirectory = "Content";
         }
 
-        public static float DeltaTime
+        public float DeltaTime
         {
             get { return deltaTime; }
         }
@@ -47,13 +48,13 @@ namespace netværksprojekt
             set { gameObjects = value; }
         }
 
-        public static List<GameObject> ObjectsToRemove
+        public List<GameObject> ObjectsToRemove
         {
             get { return objectsToRemove; }
             set { objectsToRemove = value; }
         }
 
-        public static List<GameObject> ObjectsToAdd
+        public List<GameObject> ObjectsToAdd
         {
             get { return objectsToAdd; }
             set { objectsToAdd = value; }
@@ -165,6 +166,13 @@ namespace netværksprojekt
                 gameObjects.Add(go);
             }
             objectsToAdd.Clear();
+
+            foreach (GameObject go in ObjectsToRemove)
+            {
+                gameObjects.Remove(go);
+            }
+
+            objectsToRemove.Clear();
 
             foreach (GameObject go in gameObjects)
                 go.Update();

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace netværksprojekt
 {
-    class Enemy : Component, ILoadable, IUpdateable
+    class Enemy : Component, ILoadable, IUpdateable, ICollisionEnter, ICollisionExit
     {
         private int health;
         private Transform transform;
@@ -31,5 +31,17 @@ namespace netværksprojekt
 
 
         public void LoadContent(ContentManager content) { }
+
+        public void OnCollisionEnter(Collider other)
+        {
+            if(other.GameObject.GetComponent("Player") is Player)
+            {
+                GameWorld.Instance.ObjectsToRemove.Add(this.GameObject);
+            }
+        }
+
+        public void OnCollisionExit(Collider other)
+        {
+        }
     }
 }
