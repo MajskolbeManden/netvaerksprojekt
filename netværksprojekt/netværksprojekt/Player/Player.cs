@@ -65,10 +65,10 @@ namespace netværksprojekt
             Vector2 translation = transform.Position;
             PlayerController(keyState,translation);
 
-            if (keyState.IsKeyDown(Keys.F) && hit == false)
+            if (keyState.IsKeyDown(Keys.Space) && hit == false)
                 hit = true;
 
-            if (keyState.IsKeyUp(Keys.F))
+            if (keyState.IsKeyUp(Keys.Space))
                 hit = false;
 
         }

@@ -92,18 +92,12 @@ namespace netværksprojekt
 
         
 
-        private void SpawnEnemy(KeyboardState keyState)
-        {
-            if (keyState.IsKeyDown(Keys.Space) && spawnEnemy == true)
-            {
-                CreateEnemy();
-                spawnEnemy = false;
-            }
-            if (keyState.IsKeyUp(Keys.Space))
-            {
-                spawnEnemy = true;
-            }
-        }
+       
+            
+                
+               
+           
+        
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -200,9 +194,9 @@ namespace netværksprojekt
 
             KeyboardState keyState = Keyboard.GetState();
 
-            SpawnEnemy(keyState);
+            CreateEnemy();
 
-            
+
             base.Update(gameTime);
         }
 
