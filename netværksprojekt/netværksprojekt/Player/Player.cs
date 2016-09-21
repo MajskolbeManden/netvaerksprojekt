@@ -58,6 +58,12 @@ namespace netværksprojekt
 
         public void Update()
         {
+            if(health <= 0)
+            {
+                health = 0;
+                GameWorld.Instance.ObjectsToRemove.Add(this.GameObject);
+                GameWorld.Instance.stopSpawn = true;
+            }
             KeyboardState keyState = Keyboard.GetState();
 
             highscore++;
@@ -70,6 +76,7 @@ namespace netværksprojekt
 
             if (keyState.IsKeyUp(Keys.Space))
                 hit = false;
+
 
         }
 
@@ -87,6 +94,7 @@ namespace netværksprojekt
             if (keyState.IsKeyDown(Keys.S))
                 transform.Position += new Vector2(0, 1) * speed;
 
+            
 
         }
 
