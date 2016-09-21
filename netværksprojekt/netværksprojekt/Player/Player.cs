@@ -58,17 +58,24 @@ namespace netværksprojekt
 
         public void Update()
         {
-            KeyboardState keyState = Keyboard.GetState();
+            if(health <= 0)
+            {
+                health = 0;
+                GameWorld.Instance.ObjectsToRemove.Add(this.GameObject);
+                GameWorld.Instance.spawnEnemy = false;
+            }
 
             highscore++;
 
             Vector2 translation = transform.Position;
-            PlayerController(keyState,translation);
 
-            if (keyState.IsKeyDown(Keys.F) && hit == false)
+            KeyboardState keyState = Keyboard.GetState();
+
+            PlayerController(keyState,translation);
+            if (keyState.IsKeyDown(Keys.Space) && hit == false)
                 hit = true;
 
-            if (keyState.IsKeyUp(Keys.F))
+            if (keyState.IsKeyUp(Keys.Space))
                 hit = false;
 
         }
