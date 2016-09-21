@@ -91,8 +91,12 @@ namespace netværksprojekt
         }
 
         
+<<<<<<< HEAD
+        private void SpawnEnemy()
+=======
 
         private void SpawnEnemy(KeyboardState keyState)
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
         {
             if (keyState.IsKeyDown(Keys.Space) && spawnEnemy == true)
             {
@@ -181,6 +185,11 @@ namespace netværksprojekt
             // TODO: Add your update logic here
             
 
+<<<<<<< HEAD
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+=======
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
             foreach (GameObject go in objectsToAdd)
             {
                 go.LoadContent(Content);
@@ -198,9 +207,13 @@ namespace netværksprojekt
             foreach (GameObject go in gameObjects)
                 go.Update();
 
+<<<<<<< HEAD
+            SpawnEnemy();
+=======
             KeyboardState keyState = Keyboard.GetState();
 
             SpawnEnemy(keyState);
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
 
             
             base.Update(gameTime);
