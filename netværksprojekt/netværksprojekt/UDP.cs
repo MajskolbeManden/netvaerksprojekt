@@ -43,9 +43,22 @@ namespace netværksprojekt
             
             while (ip == ip)
             {
+<<<<<<< HEAD
                 
                 byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":" +PortNr + "\nPacket: " + "\n" + msg);
                 socket.SendTo(packetData, ep);
+=======
+                Console.WriteLine("vil du skrive til en ny IP?");
+                ipNew = Console.ReadLine();
+                if (ipNew == "yes")
+
+                    Console.Write("indtast din bedsked: ");
+                msg = Console.ReadLine();
+
+                Console.WriteLine("Nu har jeg sent det");
+                byte[] sendBuf = Encoding.ASCII.GetBytes("\nName: " + navn /*+ "\n" + theIP + ":" +thePort */+ "\nMessage:" + "\n" + msg);
+                socket.SendTo(sendBuf, ep);
+>>>>>>> 32994dca9ced1ff58b9741a1643dc6c5a3f2da99
             }
             if(time.AddSeconds(10) > DateTime.UtcNow)
             {
