@@ -32,7 +32,7 @@ namespace netværksprojekt
                 return instance;
             }
         }
-
+        #region properties
         private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -44,7 +44,7 @@ namespace netværksprojekt
             get { return deltaTime; }
         }
 
-        public static List<GameObject> GameObjects
+        public List<GameObject> GameObjects
         {
             get { return gameObjects; }
             set { gameObjects = value; }
@@ -75,7 +75,7 @@ namespace netværksprojekt
 
             }
         }
-
+        #endregion
         private void CreateEnemy()
         { 
             Rnd = new Random();
