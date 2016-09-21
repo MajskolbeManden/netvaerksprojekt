@@ -21,9 +21,9 @@ namespace netværksprojekt
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
         public List<Collider> colliders = new List<Collider>();
-        private bool spawnEnemy;
-        private bool spawnCountdown;
-        private bool spawnCooldown;
+        public bool spawnEnemy = true;
+        private float spawnCountdown;
+        private float spawnCooldown = 0.5f;
         UDP udp;
         Thread t;
 
@@ -99,9 +99,25 @@ namespace netværksprojekt
 
         private void SpawnEnemy()
         {
+            if (spawnEnemy == true)
+            {
+                if (spawnCountdown > 0)
+                    spawnCountdown -= deltaTime;
+
+                if (spawnCountdown <= 0)
+                {
+                    spawnCountdown = 0;
+                    CreateEnemy();
+                    spawnCountdown = spawnCooldown;
+                }
+            }
+            else
+            {
+
+            }
 
         }
-        
+
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
