@@ -93,16 +93,7 @@ namespace netværksprojekt
         }
 
         
-
-<<<<<<< HEAD
-       
-            
-                
-               
-           
-        
-=======
-        private void SpawnEnemy(KeyboardState keyState)
+        private void SpawnEnemy()
         {
             if (stopSpawn == false)
             {
@@ -122,7 +113,6 @@ namespace netværksprojekt
             }
             
         }
->>>>>>> 104857691ffa4f4c2d138204d1623f9bf50d5b2f
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -200,6 +190,7 @@ namespace netværksprojekt
             // TODO: Add your update logic here
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
             foreach (GameObject go in objectsToAdd)
             {
                 go.LoadContent(Content);
@@ -217,10 +208,7 @@ namespace netværksprojekt
             foreach (GameObject go in gameObjects)
                 go.Update();
 
-            KeyboardState keyState = Keyboard.GetState();
-
-            CreateEnemy();
-
+            SpawnEnemy();
 
             base.Update(gameTime);
         }
