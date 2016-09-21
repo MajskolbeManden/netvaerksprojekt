@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace netværksprojekt
 {
@@ -23,6 +24,8 @@ namespace netværksprojekt
         private bool spawnEnemy;
         private bool spawnCountdown;
         private bool spawnCooldown;
+        UDP udp;
+        Thread t;
 
         public static GameWorld Instance
         {
@@ -108,6 +111,8 @@ namespace netværksprojekt
         /// </summary>
         protected override void Initialize()
         {
+           
+            
             // TODO: Add your initialization logic here
             GameObject player = new GameObject();
             player.AddComponent(new Player(player));
@@ -129,6 +134,8 @@ namespace netværksprojekt
             gameObjects.Add(gameObject);
 
             gameObjects.Add(player);
+
+            udp = new UDP();
             base.Initialize();
             
             

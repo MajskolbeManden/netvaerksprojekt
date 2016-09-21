@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using Microsoft.Xna.Framework;
+using System.Threading;
 
 namespace netværksprojekt
 {
@@ -16,12 +17,23 @@ namespace netværksprojekt
         public static IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, PortNr);
         private static UdpClient listener = new UdpClient();
         private static UdpClient sender = new UdpClient();
-
-
+        public static string theIP = "127.0.0.1";
+        public static Vector2 msg;
+        Socket socket = new Socket(AddressFamily.InterNetwork,
+                            SocketType.Dgram,
+                            ProtocolType.Udp);
+        private static IPAddress ip = IPAddress.Parse(theIP);
+        private IPEndPoint ep = new IPEndPoint(ip, PortNr);
+        public static Thread t;
+        public UDP()
+        {
+            t = new Thread(StartServer);
+            t.Start();
+        }
         public void StartClient()
         {
-
-            Vector2 msg = new Vector2(0,0);
+           
+            msg = new Vector2(0,0);
             foreach (GameObject go in GameWorld.Instance.GameObjects)
             {
                 if(go.GetComponent<Player>() != null)
@@ -31,44 +43,61 @@ namespace netværksprojekt
             }
 
             var time = DateTime.UtcNow;
-            string theIP = "127.0.0.1";
-            string ipNew;
-            bool newIP = false;
-            IPAddress idb = IPAddress.Broadcast;
-            Socket socket = new Socket(AddressFamily.InterNetwork,
-                            SocketType.Dgram,
-                            ProtocolType.Udp);
-            IPAddress ip = IPAddress.Parse(theIP);
-            IPEndPoint ep = new IPEndPoint(ip, PortNr);
             
+            //string theIP = "127.0.0.1";
+            //string ipNew;
+            //bool newIP = false;
+            IPAddress idb = IPAddress.Broadcast;
+            //Socket socket = new Socket(AddressFamily.InterNetwork,
+            //                SocketType.Dgram,
+            //                ProtocolType.Udp);
+            //IPAddress ip = IPAddress.Parse(theIP);
+            //IPEndPoint ep = new IPEndPoint(ip, PortNr);
+            
+            //if (time.AddSeconds(10) > DateTime.UtcNow)
+            //{
+            //    StartServer();
+            //}
+        }
+        public void ClientLoop()
+        {
             while (ip == ip)
             {
-                
-                byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":" +PortNr + "\nPacket: " + "\n" + msg);
+                byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":" + PortNr + "\nPacket: " + "\n" + msg);
                 socket.SendTo(packetData, ep);
             }
-            if(time.AddSeconds(10) > DateTime.UtcNow)
-            {
-                StartServer();
-            }
         }
-
-        private static void StartServer()
+        public void StartServer()
         {
+            
             var time = DateTime.UtcNow;
             listener = new UdpClient();
             listener.Client.Bind(new IPEndPoint(IPAddress.Any, PortNr));
             try
             {
-                byte[] bytes = listener.Receive(ref groupEP);
-                Console.WriteLine("Opkald fra {0}:{1}\n {2}",
-                                  groupEP.ToString(),
-                                  Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+
+                while (time.AddSeconds(10) < DateTime.UtcNow)
+                {
+                    StartClient();
+                
+                else
+                {
+                        byte[] bytes = listener.Receive(ref groupEP);
+                        Console.WriteLine("Broadcast fra: {0}:{1}\n",
+                                           groupEP.ToString(),
+                                           Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                    }
+                }
+                
+
             }
             catch (Exception e)
             {
+                
                 Console.WriteLine(e.ToString());
             }
+            
+            
         }
     }
 }
