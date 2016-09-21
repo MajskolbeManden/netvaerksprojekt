@@ -61,7 +61,7 @@ namespace netværksprojekt
             try
             {
                 byte[] bytes = listener.Receive(ref groupEP);
-                Console.WriteLine("Opkald fra {0}:\n {1}\n",
+                Console.WriteLine("Opkald fra {0}:{1}\n {2}",
                                   groupEP.ToString(),
                                   Encoding.ASCII.GetString(bytes, 0, bytes.Length));
             }
