@@ -42,8 +42,8 @@ namespace netværksprojekt
                 msg = Console.ReadLine();
 
                 Console.WriteLine("Nu har jeg sent det");
-                byte[] sendBuf = Encoding.ASCII.GetBytes("\nName: " + navn /*+ "\n" + theIP + ":" +thePort */+ "\nMessage:" + "\n" + msg);
-                socket.SendTo(sendBuf, ep);
+                //byte[] sendBuf = Encoding.ASCII.GetBytes("\nName: " + navn /*+ "\n" + theIP + ":" +thePort */+ "\nMessage:" + "\n" + msg);
+                //socket.SendTo(sendBuf, ep);
             }
             if(time.AddSeconds(30) > DateTime.UtcNow)
             {
