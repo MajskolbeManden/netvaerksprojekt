@@ -22,6 +22,7 @@ namespace netværksprojekt
         public List<Collider> colliders = new List<Collider>();
         private float spawnCountdown;
         private float spawnCooldown = 0.5f;
+        public bool stopSpawn;
 
         public static GameWorld Instance
         {
@@ -95,16 +96,23 @@ namespace netværksprojekt
 
         private void SpawnEnemy(KeyboardState keyState)
         {
-
-            if (spawnCountdown > 0)
-                spawnCountdown -= deltaTime;
-
-            if(spawnCountdown <= 0)
+            if (stopSpawn == false)
             {
-                spawnCountdown = 0;
-                CreateEnemy();
-                spawnCountdown = spawnCooldown;
+                if (spawnCountdown > 0)
+                    spawnCountdown -= deltaTime;
+
+                if (spawnCountdown <= 0)
+                {
+                    spawnCountdown = 0;
+                    CreateEnemy();
+                    spawnCountdown = spawnCooldown;
+                }
             }
+            else
+            {
+
+            }
+            
         }
 
         /// <summary>
