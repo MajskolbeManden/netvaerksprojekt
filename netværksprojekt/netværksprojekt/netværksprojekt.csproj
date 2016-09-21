@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Button.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="General Components\Base.cs" />
     <Compile Include="General Components\Collider.cs" />

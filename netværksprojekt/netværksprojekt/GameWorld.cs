@@ -229,3 +229,95 @@ namespace netværksprojekt
         }
     }
 }
+//class UDP
+//{
+
+
+//    public static IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 12000);
+//    private static UdpClient listener = new UdpClient();
+//    private static UdpClient sender = new UdpClient();
+//    public static string theIP = "192.168.87.102";
+//    public static Vector2 msg;
+//    public static string stringtest;
+//    public int pl2;
+//    //private static IPAddress ip = IPAddress.Parse(theIP);
+//    // private IPEndPoint ep = new IPEndPoint(ip, PortNr);
+//    public static Thread t;
+//    public UDP()
+//    {
+//        t = new Thread(StartServer);
+//        t.Start();
+//    }
+//    public void StartClient()
+//    {
+//        int PortNr = 13000;
+
+//        msg = new Vector2(0, 0);
+//        foreach (GameObject go in GameWorld.Instance.GameObjects)
+//        {
+//            if (go.GetComponent<Player>() != null)
+//            {
+//                msg = go.Transform.Position;
+//            }
+//        }
+
+//        var time = DateTime.UtcNow;
+
+//        Socket socket = new Socket(AddressFamily.InterNetwork,
+//                        SocketType.Dgram,
+//                        ProtocolType.Udp);
+
+//        //string theIP = "127.0.0.1";
+//        //string ipNew;
+//        //bool newIP = false;
+//        IPAddress idb = IPAddress.Broadcast;
+//        //Socket socket = new Socket(AddressFamily.InterNetwork,
+//        //                SocketType.Dgram,
+//        //                ProtocolType.Udp);
+//        IPAddress ip = IPAddress.Parse(theIP);
+//        IPEndPoint ep = new IPEndPoint(ip, PortNr);
+//        //while (ip == ip)
+//        //{
+//        //    byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":" + PortNr + "\nPacket: " + "\n" + msg);
+//        //    socket.SendTo(packetData, ep);
+//        //}
+
+//    }
+
+//    public void StartServer()
+//    {
+
+//        Stopwatch watch = new Stopwatch();
+//        watch.Start();
+//        listener = new UdpClient();
+//        listener.Client.Bind(new IPEndPoint(IPAddress.Any, 12000));
+
+//        try
+//        {
+//            while (true)
+//            {
+
+
+
+
+//                byte[] bytes = listener.Receive(ref groupEP);
+//                Console.WriteLine("Broadcast fra: {0}:{1}\n{2}:{3}",
+//                                   groupEP.ToString(),
+//                                  Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+//                Debug.WriteLine(bytes);
+//                //string stringtest = bytes.ToString();
+//                //pl2 = Convert.ToInt32(stringtest);
+
+//                //byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":"  + "\nPacket: " + "\n" + msg);
+//                //listener.Client.Send(packetData);
+
+//            }
+//        }
+
+//        catch (Exception e)
+//        {
+
+//            Console.WriteLine(e.ToString());
+//        }
+//    }
+//}
