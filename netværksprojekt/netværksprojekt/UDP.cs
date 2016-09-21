@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using Microsoft.Xna.Framework;
 using System.Threading;
+using System.Diagnostics;
 
 namespace netværksprojekt
 {
@@ -19,9 +20,6 @@ namespace netværksprojekt
         private static UdpClient sender = new UdpClient();
         public static string theIP = "127.0.0.1";
         public static Vector2 msg;
-        Socket socket = new Socket(AddressFamily.InterNetwork,
-                            SocketType.Dgram,
-                            ProtocolType.Udp);
         private static IPAddress ip = IPAddress.Parse(theIP);
         private IPEndPoint ep = new IPEndPoint(ip, PortNr);
         public static Thread t;
@@ -43,7 +41,11 @@ namespace netværksprojekt
             }
 
             var time = DateTime.UtcNow;
-            
+
+            Socket socket = new Socket(AddressFamily.InterNetwork,
+                            SocketType.Dgram,
+                            ProtocolType.Udp);
+
             //string theIP = "127.0.0.1";
             //string ipNew;
             //bool newIP = false;
@@ -53,51 +55,44 @@ namespace netværksprojekt
             //                ProtocolType.Udp);
             //IPAddress ip = IPAddress.Parse(theIP);
             //IPEndPoint ep = new IPEndPoint(ip, PortNr);
-            
-            //if (time.AddSeconds(10) > DateTime.UtcNow)
-            //{
-            //    StartServer();
-            //}
-        }
-        public void ClientLoop()
-        {
             while (ip == ip)
             {
                 byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":" + PortNr + "\nPacket: " + "\n" + msg);
                 socket.SendTo(packetData, ep);
             }
+
         }
+      
         public void StartServer()
         {
-            
-            var time = DateTime.UtcNow;
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             listener = new UdpClient();
             listener.Client.Bind(new IPEndPoint(IPAddress.Any, PortNr));
+            
             try
             {
-
-                while (time.AddSeconds(10) < DateTime.UtcNow)
+                while(true)
                 {
-                    StartClient();
-                
-                else
-                {
-                        byte[] bytes = listener.Receive(ref groupEP);
-                        Console.WriteLine("Broadcast fra: {0}:{1}\n",
-                                           groupEP.ToString(),
-                                           Encoding.ASCII.GetString(bytes, 0, bytes.Length));
-                    }
-                }
-                
 
+                    for (int i = 0; i < 1000; i++) 
+                    {
+                        //byte[] bytes = listener.Receive(ref groupEP);
+                        //Console.WriteLine("Broadcast fra: {0}:{1}\n",
+                        //                   groupEP.ToString(),
+                        //                   Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                        
+                    } 
+                     StartClient();          
+                }    
             }
-            catch (Exception e)
-            {
+                
+               catch (Exception e)
+               {
                 
                 Console.WriteLine(e.ToString());
-            }
-            
-            
-        }
-    }
+               }
+       }      
+   }
 }
