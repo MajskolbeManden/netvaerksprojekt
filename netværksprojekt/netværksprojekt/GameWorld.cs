@@ -20,7 +20,8 @@ namespace netværksprojekt
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
         public List<Collider> colliders = new List<Collider>();
-        private bool spawnEnemy;
+        private float spawnCountdown;
+        private float spawnCooldown = 0.5f;
 
         public static GameWorld Instance
         {
@@ -94,14 +95,15 @@ namespace netværksprojekt
 
         private void SpawnEnemy(KeyboardState keyState)
         {
-            if (keyState.IsKeyDown(Keys.Space) && spawnEnemy == true)
+
+            if (spawnCountdown > 0)
+                spawnCountdown -= deltaTime;
+
+            if(spawnCountdown <= 0)
             {
+                spawnCountdown = 0;
                 CreateEnemy();
-                spawnEnemy = false;
-            }
-            if (keyState.IsKeyUp(Keys.Space))
-            {
-                spawnEnemy = true;
+                spawnCountdown = spawnCooldown;
             }
         }
 
@@ -179,8 +181,8 @@ namespace netværksprojekt
                 Exit();
 
             // TODO: Add your update logic here
-            
 
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             foreach (GameObject go in objectsToAdd)
             {
                 go.LoadContent(Content);

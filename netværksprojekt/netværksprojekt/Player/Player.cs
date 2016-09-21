@@ -71,6 +71,7 @@ namespace netværksprojekt
             if (keyState.IsKeyUp(Keys.F))
                 hit = false;
 
+
         }
 
         private void PlayerController(KeyboardState keyState, Vector2 translation)
@@ -87,6 +88,7 @@ namespace netværksprojekt
             if (keyState.IsKeyDown(Keys.S))
                 transform.Position += new Vector2(0, 1) * speed;
 
+            
 
         }
 
