@@ -20,9 +20,7 @@ namespace netværksprojekt
         private static List<GameObject> objectsToRemove = new List<GameObject>();
         private static List<GameObject> gameObjects = new List<GameObject>();
         public List<Collider> colliders = new List<Collider>();
-        private float spawnCountdown;
-        private float spawnCooldown = 0.5f;
-        public bool stopSpawn;
+        private bool spawnEnemy;
 
         public static GameWorld Instance
         {
@@ -34,7 +32,7 @@ namespace netværksprojekt
                 return instance;
             }
         }
-
+        #region properties
         private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,7 +44,7 @@ namespace netværksprojekt
             get { return deltaTime; }
         }
 
-        public static List<GameObject> GameObjects
+        public List<GameObject> GameObjects
         {
             get { return gameObjects; }
             set { gameObjects = value; }
@@ -77,7 +75,7 @@ namespace netværksprojekt
 
             }
         }
-
+        #endregion
         private void CreateEnemy()
         { 
             Rnd = new Random();
@@ -93,25 +91,22 @@ namespace netværksprojekt
         }
 
         
+<<<<<<< HEAD
         private void SpawnEnemy()
+=======
+
+        private void SpawnEnemy(KeyboardState keyState)
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
         {
-            if (stopSpawn == false)
+            if (keyState.IsKeyDown(Keys.Space) && spawnEnemy == true)
             {
-                if (spawnCountdown > 0)
-                    spawnCountdown -= deltaTime;
-
-                if (spawnCountdown <= 0)
-                {
-                    spawnCountdown = 0;
-                    CreateEnemy();
-                    spawnCountdown = spawnCooldown;
-                }
+                CreateEnemy();
+                spawnEnemy = false;
             }
-            else
+            if (keyState.IsKeyUp(Keys.Space))
             {
-
+                spawnEnemy = true;
             }
-            
         }
 
         /// <summary>
@@ -188,9 +183,13 @@ namespace netværksprojekt
                 Exit();
 
             // TODO: Add your update logic here
+            
 
+<<<<<<< HEAD
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             
+=======
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
             foreach (GameObject go in objectsToAdd)
             {
                 go.LoadContent(Content);
@@ -208,8 +207,15 @@ namespace netværksprojekt
             foreach (GameObject go in gameObjects)
                 go.Update();
 
+<<<<<<< HEAD
             SpawnEnemy();
+=======
+            KeyboardState keyState = Keyboard.GetState();
 
+            SpawnEnemy(keyState);
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
+
+            
             base.Update(gameTime);
         }
 

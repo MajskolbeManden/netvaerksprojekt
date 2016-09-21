@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using Microsoft.Xna.Framework;
 
 namespace netværksprojekt
 {
@@ -17,12 +18,20 @@ namespace netværksprojekt
         private static UdpClient sender = new UdpClient();
 
 
-        private static void StartClient()
+        public void StartClient()
         {
+
+            Vector2 msg = new Vector2(0,0);
+            foreach (GameObject go in GameWorld.Instance.GameObjects)
+            {
+                if(go.GetComponent<Player>() != null)
+                {
+                    msg = go.Transform.Position;
+                }
+            }
+
             var time = DateTime.UtcNow;
             string theIP = "127.0.0.1";
-            string msg;
-            string navn;
             string ipNew;
             bool newIP = false;
             IPAddress idb = IPAddress.Broadcast;
@@ -31,9 +40,10 @@ namespace netværksprojekt
                             ProtocolType.Udp);
             IPAddress ip = IPAddress.Parse(theIP);
             IPEndPoint ep = new IPEndPoint(ip, PortNr);
-            Console.Clear();
+            
             while (ip == ip)
             {
+<<<<<<< HEAD
                 Console.WriteLine("vil du skrive til en ny IP?");
                 ipNew = Console.ReadLine();
                 if (ipNew == "yes")
@@ -44,8 +54,13 @@ namespace netværksprojekt
                 Console.WriteLine("Nu har jeg sent det");
                 //byte[] sendBuf = Encoding.ASCII.GetBytes("\nName: " + navn /*+ "\n" + theIP + ":" +thePort */+ "\nMessage:" + "\n" + msg);
                 //socket.SendTo(sendBuf, ep);
+=======
+                
+                byte[] packetData = Encoding.ASCII.GetBytes(theIP + ":" +PortNr + "\nPacket: " + "\n" + msg);
+                socket.SendTo(packetData, ep);
+>>>>>>> 9b6b80512e2bc27493654d279278ca3d053bded0
             }
-            if(time.AddSeconds(30) > DateTime.UtcNow)
+            if(time.AddSeconds(10) > DateTime.UtcNow)
             {
                 StartServer();
             }
