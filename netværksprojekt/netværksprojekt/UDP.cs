@@ -29,17 +29,21 @@ namespace netværksprojekt
         public void StartServer()
         {
             t = new Thread(Server);
+            t.IsBackground = true;
             t.Start();
             l = new Thread(ServerListener);
+            l.IsBackground = true;
             l.Start();
         }
 
         public void StartClient()
         {
-            //GameWorld.
+            
             t = new Thread(Client);
+            t.IsBackground = true;
             t.Start();
             l = new Thread(ClientListener);
+            l.IsBackground = true;
             l.Start();
         }
 
@@ -67,7 +71,7 @@ namespace netværksprojekt
                             Ycor = go.Transform.Position.Y;
                         }
                     }
-                }
+               }
                 byte[] packetData = Encoding.ASCII.GetBytes(theIP + " : " + PortNr + "\nPacket: " + "\n" + Xcor + "," + Ycor);
                 socket.SendTo(packetData, ep);
             }
@@ -76,12 +80,12 @@ namespace netværksprojekt
         
         public void ClientListener()
         {
-            Socket socket = new Socket(AddressFamily.InterNetwork,
-                          SocketType.Dgram,
-                          ProtocolType.Udp);
+            
             UdpClient cListener = new UdpClient();
-            cListener.Client.Bind(new IPEndPoint(IPAddress.Any, 13000));
-            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 13000);
+            cListener.Client.Bind(new IPEndPoint(IPAddress.Any, 13001));
+            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 13001);
+         
+            
             while (true)
             {
               byte[] bytes = cListener.Receive(ref groupEP);
@@ -89,7 +93,9 @@ namespace netværksprojekt
             Console.WriteLine("Received Packets from {0} :\n {1}\n",
                         groupEP.ToString(),
                         Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+            
             }
+            
             
         }
 

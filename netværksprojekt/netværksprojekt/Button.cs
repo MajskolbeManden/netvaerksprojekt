@@ -37,7 +37,9 @@ namespace netværksprojekt
                 {
                     isClicked = true;
                     check = false;
+               
                 }
+             
             }
             else
             {
