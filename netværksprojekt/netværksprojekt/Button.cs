@@ -7,6 +7,7 @@ namespace netværksprojekt
 {
     public class Button
     {
+        bool check;
         Texture2D texture;
         Vector2 position;
         Rectangle rectangle;
@@ -18,7 +19,7 @@ namespace netværksprojekt
         {
             texture = newTexture;
             position = newPosition;
-     
+            check = true;
             width = newWidth;
             height = newHeight;
         }
@@ -32,10 +33,11 @@ namespace netværksprojekt
             if (mouseRectangle.Intersects(rectangle))
             {
              
-                if (mouse.LeftButton == ButtonState.Pressed)
+                if (mouse.LeftButton == ButtonState.Pressed && check == true)
                 {
-                    isClicked = true;  
-                } 
+                    isClicked = true;
+                    check = false;
+                }
             }
             else
             {

@@ -32,8 +32,8 @@ namespace netværksprojekt
         private float spawnCooldown = 0.5f;
         UDP udp;
         Thread t;
-        Button server;
-        Button Client;
+        public static Button bServer;
+        public static Button bClient;
 
         public static GameWorld Instance
         {
@@ -178,8 +178,8 @@ namespace netværksprojekt
             {
                 go.LoadContent(Content);
             }
-            Client = new Button(Content.Load<Texture2D>("base1"), new Vector2(100, 100), 10, 10);
-            server = new Button(Content.Load<Texture2D>("base1"), new Vector2(10, 10), 10, 10);
+            bClient = new Button(Content.Load<Texture2D>("base1"), new Vector2(100, 100), 10, 10);
+            bServer = new Button(Content.Load<Texture2D>("base1"), new Vector2(10, 10), 10, 10);
 
             IsMouseVisible = true;
             
@@ -205,15 +205,15 @@ namespace netværksprojekt
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             MouseState mouse = Mouse.GetState();
-            Client.Update(Content,mouse);
-            server.Update(Content, mouse);
+            bClient.Update(Content,mouse);
+            bServer.Update(Content, mouse);
             // TODO: Add your update logic here
-            if(Client.isClicked== true)
+            if(bClient.isClicked== true)
             {
                 udp.StartClient();
                 currentGameState = GameState.Playing;
             }
-            if (server.isClicked == true)
+            if (bServer.isClicked == true)
             {
                 udp.StartServer();
                 currentGameState = GameState.Playing;
@@ -263,8 +263,8 @@ namespace netværksprojekt
 
             if(currentGameState == GameState.MainMenu)
             {
-            Client.Draw(spriteBatch);
-            server.Draw(spriteBatch);
+            bClient.Draw(spriteBatch);
+            bServer.Draw(spriteBatch);
             }
      
             spriteBatch.End();

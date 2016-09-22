@@ -36,6 +36,7 @@ namespace netværksprojekt
 
         public void StartClient()
         {
+            //GameWorld.
             t = new Thread(Client);
             t.Start();
             l = new Thread(ClientListener);
@@ -56,12 +57,15 @@ namespace netværksprojekt
        
             while (ip==ip)
             {
-                foreach (GameObject go in GameWorld.Instance.GameObjects)
+                lock (t)
                 {
-                    if (go.GetComponent<Player>() != null)
+                    foreach (GameObject go in GameWorld.Instance.GameObjects)
                     {
-                        Xcor = go.Transform.Position.X;
-                        Ycor = go.Transform.Position.Y;
+                        if (go.GetComponent<Player>() != null)
+                        {
+                            Xcor = go.Transform.Position.X;
+                            Ycor = go.Transform.Position.Y;
+                        }
                     }
                 }
                 byte[] packetData = Encoding.ASCII.GetBytes(theIP + " : " + PortNr + "\nPacket: " + "\n" + Xcor + "," + Ycor);
@@ -75,12 +79,12 @@ namespace netværksprojekt
             Socket socket = new Socket(AddressFamily.InterNetwork,
                           SocketType.Dgram,
                           ProtocolType.Udp);
-            UdpClient listener = new UdpClient();
-            listener.Client.Bind(new IPEndPoint(IPAddress.Any, 13000));
+            UdpClient cListener = new UdpClient();
+            cListener.Client.Bind(new IPEndPoint(IPAddress.Any, 13000));
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 13000);
             while (true)
             {
-              byte[] bytes = listener.Receive(ref groupEP);
+              byte[] bytes = cListener.Receive(ref groupEP);
 
             Console.WriteLine("Received Packets from {0} :\n {1}\n",
                         groupEP.ToString(),
@@ -120,12 +124,12 @@ namespace netværksprojekt
         public void ServerListener()
         {
 
-            UdpClient listener = new UdpClient();
-            listener.Client.Bind(new IPEndPoint(IPAddress.Any, 12000));
+            UdpClient sListener = new UdpClient();
+            sListener.Client.Bind(new IPEndPoint(IPAddress.Any, 12000));
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 12000);
             while (true)
             {
-                byte[] bytes = listener.Receive(ref groupEP);
+                byte[] bytes = sListener.Receive(ref groupEP);
 
                 Console.WriteLine("Received Packets from {0} :\n {1}\n",
                             groupEP.ToString(),
