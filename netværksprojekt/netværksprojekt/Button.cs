@@ -14,12 +14,11 @@ namespace netværksprojekt
         string spriteRed;
         int width;
         int height;
-        public Button(Texture2D newTexture, Vector2 newPosition, string spirteOff, string spriteOn, int newWidth, int newHeight)
+        public Button(Texture2D newTexture, Vector2 newPosition, int newWidth, int newHeight)
         {
             texture = newTexture;
             position = newPosition;
-            spriteBlack = spirteOff;
-            spriteRed = spriteOn;
+     
             width = newWidth;
             height = newHeight;
         }
@@ -32,7 +31,7 @@ namespace netværksprojekt
 
             if (mouseRectangle.Intersects(rectangle))
             {
-                texture = content.Load<Texture2D>(spriteRed);
+             
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     isClicked = true;  
@@ -40,7 +39,7 @@ namespace netværksprojekt
             }
             else
             {
-                texture = content.Load<Texture2D>(spriteBlack);
+             
                 isClicked = false;
             }
         }

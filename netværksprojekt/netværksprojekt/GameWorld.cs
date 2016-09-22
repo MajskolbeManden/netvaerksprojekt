@@ -12,8 +12,14 @@ namespace netværksprojekt
     /// </summary>
     public class GameWorld : Game
     {
+        enum GameState
+        {
+            MainMenu,
+            Playing
+        }
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        GameState currentGameState = GameState.MainMenu;
         private static float deltaTime;
         private static GameWorld instance;
         private Random Rnd;
@@ -26,6 +32,8 @@ namespace netværksprojekt
         private float spawnCooldown = 0.5f;
         UDP udp;
         Thread t;
+        Button server;
+        Button Client;
 
         public static GameWorld Instance
         {
@@ -150,7 +158,7 @@ namespace netværksprojekt
             gameObjects.Add(gameObject);
 
             gameObjects.Add(player);
-
+            currentGameState = GameState.MainMenu;
             udp = new UDP();
             base.Initialize();
             
@@ -170,7 +178,8 @@ namespace netværksprojekt
             {
                 go.LoadContent(Content);
             }
-
+            Client = new Button(Content.Load<Texture2D>("base1"), new Vector2(100, 100), 10, 10);
+            server = new Button(Content.Load<Texture2D>("base1"), new Vector2(10, 10), 10, 10);
 
             IsMouseVisible = true;
             
@@ -195,10 +204,21 @@ namespace netværksprojekt
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            MouseState mouse = Mouse.GetState();
+            Client.Update(Content,mouse);
+            server.Update(Content, mouse);
             // TODO: Add your update logic here
-            
-    
+            if(Client.isClicked== true)
+            {
+                udp.StartClient();
+                currentGameState = GameState.Playing;
+            }
+            if (server.isClicked == true)
+            {
+                udp.StartServer();
+                currentGameState = GameState.Playing;
+            }
+
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             
             foreach (GameObject go in objectsToAdd)
@@ -218,8 +238,12 @@ namespace netværksprojekt
             foreach (GameObject go in gameObjects)
                 go.Update();
 
+            if(currentGameState == GameState.Playing)
+            {
+             SpawnEnemy();
+            }
+            
 
-            SpawnEnemy();
             base.Update(gameTime);
         }
 
@@ -231,12 +255,18 @@ namespace netværksprojekt
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-
+            
             
 
             foreach (GameObject go in gameObjects)
                 go.Draw(spriteBatch);
 
+            if(currentGameState == GameState.MainMenu)
+            {
+            Client.Draw(spriteBatch);
+            server.Draw(spriteBatch);
+            }
+     
             spriteBatch.End();
 
             // TODO: Add your drawing code here

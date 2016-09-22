@@ -13,12 +13,9 @@ namespace netværksprojekt
 {
     class UDP
     {
-        
-        
-       
         private static UdpClient listener = new UdpClient();
         private static UdpClient sender = new UdpClient();
-        public static string theIP = "192.168.87.102";
+        public static string theIP = "127.0.0.1";
         public static Vector2 msg;
         public static float Xcor;
         public static float Ycor;
@@ -26,15 +23,28 @@ namespace netværksprojekt
         public static Thread t;
         public UDP()
         {
-         
-            t = new Thread(StartClient);
+            
+        }
+
+        public void StartServer()
+        {
+            t = new Thread(Server);
             t.Start();
-            l = new Thread(Listener);
+            l = new Thread(ServerListener);
             l.Start();
         }
-        public static void StartClient()
+
+        public void StartClient()
         {
-            int PortNr = 13000;
+            t = new Thread(Client);
+            t.Start();
+            l = new Thread(ClientListener);
+            l.Start();
+        }
+
+        public static void Client()
+        {
+            int PortNr = 12000;
             var time = DateTime.UtcNow;
             
             Socket socket = new Socket(AddressFamily.InterNetwork,
@@ -44,7 +54,7 @@ namespace netværksprojekt
             IPAddress ip = IPAddress.Parse(theIP);
             IPEndPoint ep = new IPEndPoint(ip, PortNr);
        
-            while (true)
+            while (ip==ip)
             {
                 foreach (GameObject go in GameWorld.Instance.GameObjects)
                 {
@@ -54,48 +64,74 @@ namespace netværksprojekt
                         Ycor = go.Transform.Position.Y;
                     }
                 }
-                byte[] packetData = Encoding.ASCII.GetBytes(theIP + " : " + PortNr + "\nPacket: " + "\n" + Xcor + Ycor);
+                byte[] packetData = Encoding.ASCII.GetBytes(theIP + " : " + PortNr + "\nPacket: " + "\n" + Xcor + "," + Ycor);
                 socket.SendTo(packetData, ep);
             }
             
         }
-        public void Listener()
+        
+        public void ClientListener()
         {
-            UdpClient listener = new UdpClient(12000);
-            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 12000);
-            byte[] bytes = listener.Receive(ref groupEP);
+            Socket socket = new Socket(AddressFamily.InterNetwork,
+                          SocketType.Dgram,
+                          ProtocolType.Udp);
+            UdpClient listener = new UdpClient();
+            listener.Client.Bind(new IPEndPoint(IPAddress.Any, 13000));
+            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 13000);
+            while (true)
+            {
+              byte[] bytes = listener.Receive(ref groupEP);
+
+            Console.WriteLine("Received Packets from {0} :\n {1}\n",
+                        groupEP.ToString(),
+                        Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+            }
+            
         }
-      
-        public void StartServer()
+
+        public void Server()
+        {
+            int PortNr = 13000;
+            var time = DateTime.UtcNow;
+
+            Socket socket = new Socket(AddressFamily.InterNetwork,
+                            SocketType.Dgram,
+                            ProtocolType.Udp);
+            IPAddress idb = IPAddress.Broadcast;
+            IPAddress ip = IPAddress.Parse(theIP);
+            IPEndPoint ep = new IPEndPoint(ip, PortNr);
+
+            while (ip == ip)
+            {
+                foreach (GameObject go in GameWorld.Instance.GameObjects)
+                {
+                    if (go.GetComponent<Player>() != null)
+                    {
+                        Xcor = go.Transform.Position.X;
+                        Ycor = go.Transform.Position.Y;
+                    }
+                }
+                byte[] packetData = Encoding.ASCII.GetBytes(theIP + " : " + PortNr + "\nPacket: " + "\n" + Xcor + "," + Ycor);
+                socket.SendTo(packetData, ep);
+            }
+
+
+        }
+        public void ServerListener()
         {
 
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            listener = new UdpClient();
+            UdpClient listener = new UdpClient();
             listener.Client.Bind(new IPEndPoint(IPAddress.Any, 12000));
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, 12000);
-            try
+            while (true)
             {
-                while(true)
-                {
+                byte[] bytes = listener.Receive(ref groupEP);
 
-                    for (int i = 0; i < 1000; i++) 
-                    {
-                        
-                        //Console.WriteLine("Broadcast fra: {0}:{1}\n",
-                        //                   groupEP.ToString(),
-                        //                   Encoding.ASCII.GetString(bytes, 0, bytes.Length));
-                        
-                    } 
-                     StartClient();          
-                }    
+                Console.WriteLine("Received Packets from {0} :\n {1}\n",
+                            groupEP.ToString(),
+                            Encoding.ASCII.GetString(bytes, 0, bytes.Length));
             }
-                
-               catch (Exception e)
-               {
-                
-                Console.WriteLine(e.ToString());
-               }
-       }      
-   }
+
+        }
+    }
 }
